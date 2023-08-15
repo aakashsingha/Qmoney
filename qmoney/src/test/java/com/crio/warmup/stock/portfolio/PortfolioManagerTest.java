@@ -25,9 +25,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
 
-/*
-This class is supposed to be used by assessments only.
- */
 @ExtendWith(MockitoExtension.class)
 class PortfolioManagerTest {
 

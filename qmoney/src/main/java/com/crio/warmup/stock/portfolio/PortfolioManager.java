@@ -13,9 +13,7 @@ public interface PortfolioManager {
 
 
    List<AnnualizedReturn> calculateAnnualizedReturn(List<PortfolioTrade> portfolioTrades,
-      LocalDate endDate); //{
-    // TODO Auto-generated method stub
-    //return null;
-//}
+      LocalDate endDate); 
+    
 }
 

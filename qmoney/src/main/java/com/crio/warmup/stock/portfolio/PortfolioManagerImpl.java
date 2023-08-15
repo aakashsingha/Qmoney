@@ -22,25 +22,12 @@ public class PortfolioManagerImpl implements PortfolioManager {
 
   private RestTemplate restTemplate;
 
-  // Caution: Do not delete or modify the constructor, or else your build will break!
-  // This is absolutely necessary for backward compatibility
+
   public PortfolioManagerImpl(RestTemplate restTemplate) {
     this.restTemplate = restTemplate;
   }
 
 
-  //TODO: CRIO_TASK_MODULE_REFACTOR
-  // 1. Now we want to convert our code into a module, so we will not call it from main anymore.
-  //    Copy your code from Module#3 PortfolioManagerApplication#calculateAnnualizedReturn
-  //    into #calculateAnnualizedReturn function here and ensure it follows the method signature.
-  // 2. Logic to read Json file and convert them into Objects will not be required further as our
-  //    clients will take care of it, going forward.
-
-  // Note:
-  // Make sure to exercise the tests inside PortfolioManagerTest using command below:
-  // ./gradlew test --tests PortfolioManagerTest
-
-  //CHECKSTYLE:OFF
   @Override
   public List<AnnualizedReturn> calculateAnnualizedReturn(List<PortfolioTrade> portfolioTrades,
       LocalDate endDate)
@@ -49,16 +36,11 @@ public class PortfolioManagerImpl implements PortfolioManager {
         for(PortfolioTrade p: portfolioTrades)
     {
       List<Candle> tiingocandle = getStockQuote(p.getSymbol(),p.getPurchaseDate(),endDate);
-     // List<Candle> tiingocandle = fetchCandles(p,localDate,getToken());
-   /*  String url = prepareUrl(p, localDate, getToken());
-    RestTemplate restTemplate = new RestTemplate();
-    TiingoCandle[] ob= restTemplate.getForObject(url,TiingoCandle[].class);
-    List<Candle> tiingocandle = Arrays.asList(ob);*/
     if( tiingocandle==null){
       continue;
     }
-    Double purchasePrice = getOpeningPriceOnStartDate(tiingocandle);//ob[0].getOpen();
-    Double sellPrice = getClosingPriceOnEndDate(tiingocandle);//ob[ob.length-1].getClose();
+    Double purchasePrice = getOpeningPriceOnStartDate(tiingocandle);
+    Double sellPrice = getClosingPriceOnEndDate(tiingocandle);
     AnnualizedReturn annualizedReturnobj = calculateAnnualizedReturnsRefactored(endDate,p,purchasePrice,sellPrice);
     annualizedReturn.add(annualizedReturnobj);
   }
@@ -88,11 +70,7 @@ public class PortfolioManagerImpl implements PortfolioManager {
       String symbol=trade.getSymbol();
      return new AnnualizedReturn(symbol, annualisedReturns,totalReturns);
  }
-  //CHECKSTYLE:OFF
-
-  // TODO: CRIO_TASK_MODULE_REFACTOR
-  //  Extract the logic to call Tiingo third-party APIs to a separate function.
-  //  Remember to fill out the buildUri function and use that.
+ 
 
 
   public List<Candle> getStockQuote(String symbol, LocalDate from, LocalDate to) {
